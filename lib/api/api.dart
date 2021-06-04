@@ -56,11 +56,19 @@ class Api {
     };
   }
 
+  static Future<ArticlesGetResponse> articlesGet(
+    BuildContext context,
+    ArticlesGetRequest req,
+  ) async {
+    final res = await _get(context, '/articles', req);
+    return ArticlesGetResponse.fromJson(res);
+  }
+
   static Future<TagsGetResponse> tagsGet(
     BuildContext context,
     TagsGetRequest req,
   ) async {
-    final res = await _get(context, '/tags', TagsGetRequest());
+    final res = await _get(context, '/tags', req);
     return TagsGetResponse.fromJson(res);
   }
 }

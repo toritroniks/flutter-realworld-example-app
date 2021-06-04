@@ -16,8 +16,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scrollbarTheme: ScrollbarThemeData(
           isAlwaysShown: true,
-          thumbColor:
-              MaterialStateProperty.resolveWith((states) => Colors.grey),
           thickness: MaterialStateProperty.resolveWith((states) => 10),
           showTrackOnHover: true,
         ),

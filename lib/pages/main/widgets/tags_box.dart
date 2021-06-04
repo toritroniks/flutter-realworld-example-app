@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_realworld/api/api.dart';
+import 'package:flutter_realworld/api/api_models.dart';
 
-class TagsBox extends StatelessWidget {
-  const TagsBox({
-    Key? key,
-  }) : super(key: key);
+class TagsBox extends StatefulWidget {
+  const TagsBox();
+
+  @override
+  _TagsBoxState createState() => _TagsBoxState();
+}
+
+class _TagsBoxState extends State<TagsBox> {
+  List<String> tags = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _init();
+    });
+  }
+
+  Future<void> _init() async {
+    try {
+      tags = (await Api.tagsGet(context, TagsGetRequest())).tags;
+    } finally {
+      isLoading = false;
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,53 +44,28 @@ class TagsBox extends StatelessWidget {
           children: [
             Text('Popular Tags'),
             SizedBox(height: 10),
+            if (isLoading) Text('Loading tags...'),
             Wrap(
               spacing: 4,
               runSpacing: 4,
-              children: [
-                ...[
-                  '',
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  0,
-                  1,
-                  1,
-                  222,
-                  1,
-                  33,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1,
-                  1
-                ]
-                    .map(
-                      (e) => Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color(0xFF818A91),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          e.toString(),
-                          style: TextStyle(color: Colors.white),
-                        ),
+              children: tags
+                  .map(
+                    (e) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
                       ),
-                    )
-                    .toList()
-              ],
+                      decoration: BoxDecoration(
+                        color: Color(0xFF818A91),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        e.toString(),
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  )
+                  .toList(),
             )
           ],
         ),
