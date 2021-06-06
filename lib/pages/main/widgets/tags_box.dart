@@ -26,8 +26,8 @@ class _TagsBoxState extends State<TagsBox> {
       tags = (await Api.tagsGet(context, TagsGetRequest())).tags;
     } finally {
       isLoading = false;
+      setState(() {});
     }
-    setState(() {});
   }
 
   @override

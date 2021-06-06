@@ -23,7 +23,12 @@ class ArticlesGetRequest {
 @JsonSerializable(explicitToJson: true)
 class ArticlesGetResponse {
   List<ArticleItem> articles;
-  ArticlesGetResponse({required this.articles});
+  int articlesCount;
+
+  ArticlesGetResponse({
+    required this.articles,
+    required this.articlesCount,
+  });
   factory ArticlesGetResponse.fromJson(Map<String, dynamic> json) =>
       _$ArticlesGetResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ArticlesGetResponseToJson(this);

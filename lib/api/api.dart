@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_realworld/api/api_models.dart';
+import 'package:flutter_realworld/api/mock.dart';
 import 'package:flutter_realworld/config/app_config.dart';
 import 'package:flutter_realworld/constants/constants.dart';
 import 'package:http/http.dart' as http;
@@ -62,6 +63,7 @@ class Api {
   ) async {
     final res = await _get(context, '/articles', req);
     return ArticlesGetResponse.fromJson(res);
+    // return ArticlesGetResponse.fromJson(json.decode(mockArticlesGet));
   }
 
   static Future<TagsGetResponse> tagsGet(
@@ -70,5 +72,6 @@ class Api {
   ) async {
     final res = await _get(context, '/tags', req);
     return TagsGetResponse.fromJson(res);
+    // return TagsGetResponse.fromJson(json.decode(mockTagsGet));
   }
 }

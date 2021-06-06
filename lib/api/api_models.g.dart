@@ -24,6 +24,7 @@ ArticlesGetResponse _$ArticlesGetResponseFromJson(Map<String, dynamic> json) {
     articles: (json['articles'] as List<dynamic>)
         .map((e) => ArticleItem.fromJson(e as Map<String, dynamic>))
         .toList(),
+    articlesCount: json['articlesCount'] as int,
   );
 }
 
@@ -31,6 +32,7 @@ Map<String, dynamic> _$ArticlesGetResponseToJson(
         ArticlesGetResponse instance) =>
     <String, dynamic>{
       'articles': instance.articles.map((e) => e.toJson()).toList(),
+      'articlesCount': instance.articlesCount,
     };
 
 ArticleItem _$ArticleItemFromJson(Map<String, dynamic> json) {
