@@ -1,11 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_realworld/providers/login_provider.dart';
 import 'package:flutter_realworld/responsive.dart';
 import 'package:flutter_realworld/router/router.gr.dart';
 import 'package:flutter_realworld/widgets/custom_base.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage();
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -60,19 +70,26 @@ class LoginPage extends StatelessWidget {
                             CustomTextField(
                               hintText: 'Email',
                               // autofillHints: [AutofillHints.email], // TODO: uncomment when autofill bug fix gets to flutter stable
+                              onChanged: (val) {
+                                email = val;
+                              },
                             ),
                             SizedBox(height: 20),
                             CustomTextField(
                               hintText: 'Password',
-                              controller: TextEditingController(),
                               // autofillHints: [AutofillHints.password], // TODO: uncomment when autofill bug fix gets to flutter stable
+                              onChanged: (val) {
+                                password = val;
+                              },
                             ),
                             SizedBox(height: 20),
                             Row(
                               children: [
                                 Spacer(),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _login();
+                                  },
                                   style: ButtonStyle(
                                       foregroundColor:
                                           MaterialStateProperty.all(
@@ -108,6 +125,14 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _login() async {
+    await context.read(loginProvider).login(context, email, password);
+    await context.router.pushAndPopUntil(
+      MainRoute(),
+      predicate: (route) => false,
+    );
+  }
 }
 
 class CustomTextField extends StatelessWidget {
@@ -115,17 +140,20 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.hintText,
     this.autofillHints,
+    this.onChanged,
   });
 
   final TextEditingController? controller;
   final String? hintText;
   final Iterable<String>? autofillHints;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       autofillHints: autofillHints,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
         focusedBorder: OutlineInputBorder(

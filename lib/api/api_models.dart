@@ -99,3 +99,83 @@ class TagsGetResponse {
       _$TagsGetResponseFromJson(json);
   Map<String, dynamic> toJson() => _$TagsGetResponseToJson(this);
 }
+
+@JsonSerializable(explicitToJson: true)
+class UserGetRequest {
+  UserGetRequest();
+  factory UserGetRequest.fromJson(Map<String, dynamic> json) =>
+      _$UserGetRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$UserGetRequestToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGetResponse {
+  LoginUser user;
+
+  UserGetResponse({required this.user});
+  factory UserGetResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserGetResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$UserGetResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LoginPostRequest {
+  LoginReqUser user;
+
+  LoginPostRequest({
+    required this.user,
+  });
+  factory LoginPostRequest.fromJson(Map<String, dynamic> json) =>
+      _$LoginPostRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginPostRequestToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LoginReqUser {
+  String email;
+  String password;
+
+  LoginReqUser({
+    required this.email,
+    required this.password,
+  });
+  factory LoginReqUser.fromJson(Map<String, dynamic> json) =>
+      _$LoginReqUserFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginReqUserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LoginPostResponse {
+  LoginUser user;
+
+  LoginPostResponse({required this.user});
+  factory LoginPostResponse.fromJson(Map<String, dynamic> json) =>
+      _$LoginPostResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginPostResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LoginUser {
+  String? bio;
+  String createdAt;
+  String email;
+  int id;
+  String? image;
+  String token;
+  String updatedAt;
+  String username;
+
+  LoginUser({
+    required this.bio,
+    required this.createdAt,
+    required this.email,
+    required this.id,
+    required this.image,
+    required this.token,
+    required this.updatedAt,
+    required this.username,
+  });
+  factory LoginUser.fromJson(Map<String, dynamic> json) =>
+      _$LoginUserFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginUserToJson(this);
+}

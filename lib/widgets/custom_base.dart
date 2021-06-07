@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_realworld/providers/login_provider.dart';
 import 'package:flutter_realworld/responsive.dart';
 import 'package:flutter_realworld/widgets/custom_app_bar.dart';
 import 'package:flutter_realworld/widgets/custom_content_area.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomBase extends StatelessWidget {
   const CustomBase({
@@ -15,11 +17,18 @@ class CustomBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Responsive(
-      desktop: _CustomBaseContent(banner: banner, child: child),
-      mobile: _ScaledContent(
-        child: _CustomBaseContent(banner: banner, child: child),
-      ),
+    return Consumer(
+      builder: (context, watch, _) {
+        final isLoginUserLoading = watch(loginProvider).isLoading;
+        return isLoginUserLoading
+            ? Container()
+            : Responsive(
+                desktop: _CustomBaseContent(banner: banner, child: child),
+                mobile: _ScaledContent(
+                  child: _CustomBaseContent(banner: banner, child: child),
+                ),
+              );
+      },
     );
   }
 }

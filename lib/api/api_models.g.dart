@@ -99,3 +99,80 @@ Map<String, dynamic> _$TagsGetResponseToJson(TagsGetResponse instance) =>
     <String, dynamic>{
       'tags': instance.tags,
     };
+
+UserGetRequest _$UserGetRequestFromJson(Map<String, dynamic> json) {
+  return UserGetRequest();
+}
+
+Map<String, dynamic> _$UserGetRequestToJson(UserGetRequest instance) =>
+    <String, dynamic>{};
+
+UserGetResponse _$UserGetResponseFromJson(Map<String, dynamic> json) {
+  return UserGetResponse(
+    user: LoginUser.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$UserGetResponseToJson(UserGetResponse instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
+
+LoginPostRequest _$LoginPostRequestFromJson(Map<String, dynamic> json) {
+  return LoginPostRequest(
+    user: LoginReqUser.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$LoginPostRequestToJson(LoginPostRequest instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
+
+LoginReqUser _$LoginReqUserFromJson(Map<String, dynamic> json) {
+  return LoginReqUser(
+    email: json['email'] as String,
+    password: json['password'] as String,
+  );
+}
+
+Map<String, dynamic> _$LoginReqUserToJson(LoginReqUser instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'password': instance.password,
+    };
+
+LoginPostResponse _$LoginPostResponseFromJson(Map<String, dynamic> json) {
+  return LoginPostResponse(
+    user: LoginUser.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$LoginPostResponseToJson(LoginPostResponse instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
+
+LoginUser _$LoginUserFromJson(Map<String, dynamic> json) {
+  return LoginUser(
+    bio: json['bio'] as String?,
+    createdAt: json['createdAt'] as String,
+    email: json['email'] as String,
+    id: json['id'] as int,
+    image: json['image'] as String?,
+    token: json['token'] as String,
+    updatedAt: json['updatedAt'] as String,
+    username: json['username'] as String,
+  );
+}
+
+Map<String, dynamic> _$LoginUserToJson(LoginUser instance) => <String, dynamic>{
+      'bio': instance.bio,
+      'createdAt': instance.createdAt,
+      'email': instance.email,
+      'id': instance.id,
+      'image': instance.image,
+      'token': instance.token,
+      'updatedAt': instance.updatedAt,
+      'username': instance.username,
+    };
