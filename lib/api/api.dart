@@ -5,6 +5,7 @@ import 'package:flutter_realworld/api/api_models.dart';
 import 'package:flutter_realworld/api/mock.dart';
 import 'package:flutter_realworld/config/app_config.dart';
 import 'package:flutter_realworld/constants/constants.dart';
+import 'package:flutter_realworld/errors/api_validation_error.dart';
 import 'package:flutter_realworld/providers/login_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +30,9 @@ class Api {
     final resBody = json.decode(res.body);
     print('POST FINISH: $resBody');
     if (res.statusCode != 200) {
+      if (res.statusCode == 422) {
+        throw ApiValidationError(resBody);
+      }
       throw Exception('API ERROR');
     }
     return resBody;
@@ -59,7 +63,9 @@ class Api {
 
   static Future<Map<String, String>> _getHeaders(BuildContext context) async {
     final token = await context.read(loginProvider).token;
-    return {if (token != null) 'Authorization': 'Token $token'};
+    return {
+      if (token != null) 'Authorization': 'Token $token',
+    };
   }
 
   static Future<Map<String, String>> _postHeaders(BuildContext context) async {
@@ -102,5 +108,13 @@ class Api {
   ) async {
     final res = await _get(context, '/user', req);
     return UserGetResponse.fromJson(res);
+  }
+
+  static Future<UsersPostResponse> usersPost(
+    BuildContext context,
+    UsersPostRequest req,
+  ) async {
+    final res = await _post(context, '/users', req);
+    return UsersPostResponse.fromJson(res);
   }
 }

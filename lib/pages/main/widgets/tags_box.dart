@@ -35,7 +35,7 @@ class _TagsBoxState extends State<TagsBox> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Color(0xFFF0F0F0),
+        color: Color(0xFFF3F3F3),
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -53,7 +53,7 @@ class _TagsBoxState extends State<TagsBox> {
                     (e) => Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
-                        vertical: 3,
+                        vertical: 6,
                       ),
                       decoration: BoxDecoration(
                         color: Color(0xFF818A91),
@@ -61,7 +61,11 @@ class _TagsBoxState extends State<TagsBox> {
                       ),
                       child: Text(
                         e.toString(),
-                        style: TextStyle(fontSize: 12, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                          height: 0.5,
+                        ),
                       ),
                     ),
                   )

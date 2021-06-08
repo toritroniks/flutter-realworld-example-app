@@ -29,11 +29,32 @@ class LoginProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> signUp(
+    BuildContext context, {
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    final res = await Api.usersPost(
+      context,
+      UsersPostRequest(
+        user: SignUpUser(
+          username: username,
+          email: email,
+          password: password,
+        ),
+      ),
+    );
+    await _hiveBox.put(tokenKey, res.user.token);
+    _user = res.user;
+    notifyListeners();
+  }
+
   Future<void> login(
-    BuildContext context,
-    String email,
-    String password,
-  ) async {
+    BuildContext context, {
+    required String email,
+    required String password,
+  }) async {
     final res = await Api.loginPost(
       context,
       LoginPostRequest(

@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Realworld App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         scrollbarTheme: ScrollbarThemeData(
           isAlwaysShown: true,
           thickness: MaterialStateProperty.resolveWith((states) => 10),

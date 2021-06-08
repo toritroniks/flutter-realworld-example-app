@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_realworld/errors/api_validation_error.dart';
 import 'package:flutter_realworld/providers/login_provider.dart';
 import 'package:flutter_realworld/responsive.dart';
 import 'package:flutter_realworld/router/router.gr.dart';
 import 'package:flutter_realworld/widgets/custom_base.dart';
+import 'package:flutter_realworld/widgets/custom_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,6 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  List<String> errors = [];
   String email = '';
   String password = '';
 
@@ -57,66 +60,38 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                AutofillGroup(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final width = Responsive.isMobile(context)
-                          ? constraints.maxWidth
-                          : constraints.maxWidth * 0.4;
-                      return Container(
-                        width: width,
-                        child: Column(
-                          children: [
-                            CustomTextField(
-                              hintText: 'Email',
-                              // autofillHints: [AutofillHints.email], // TODO: uncomment when autofill bug fix gets to flutter stable
-                              onChanged: (val) {
-                                email = val;
-                              },
-                            ),
-                            SizedBox(height: 20),
-                            CustomTextField(
-                              hintText: 'Password',
-                              // autofillHints: [AutofillHints.password], // TODO: uncomment when autofill bug fix gets to flutter stable
-                              onChanged: (val) {
-                                password = val;
-                              },
-                            ),
-                            SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Spacer(),
-                                TextButton(
-                                  onPressed: () {
-                                    _login();
-                                  },
-                                  style: ButtonStyle(
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Theme.of(context).primaryColor),
-                                      overlayColor:
-                                          MaterialStateProperty.resolveWith(
-                                        (states) => states
-                                                .contains(MaterialState.hovered)
-                                            ? Colors.black12
-                                            : null,
-                                      ),
-                                      fixedSize: MaterialStateProperty.all(
-                                          Size(100, 50)),
-                                      textStyle: MaterialStateProperty.all(
-                                          TextStyle(fontSize: 18))),
-                                  child: Text('Sign in'),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final width = Responsive.isMobile(context)
+                        ? constraints.maxWidth
+                        : constraints.maxWidth * 0.4;
+                    return Container(
+                      width: width,
+                      child: CustomForm(
+                        errors: errors,
+                        submitText: 'Sign in',
+                        onSubmit: () {
+                          _login();
+                        },
+                        children: [
+                          CustomTextField(
+                            hintText: 'Email',
+                            // autofillHints: [AutofillHints.email], // TODO: uncomment when autofill bug fix gets to flutter stable
+                            onChanged: (val) {
+                              email = val;
+                            },
+                          ),
+                          CustomTextField(
+                            hintText: 'Password',
+                            // autofillHints: [AutofillHints.password], // TODO: uncomment when autofill bug fix gets to flutter stable
+                            onChanged: (val) {
+                              password = val;
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -127,42 +102,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _login() async {
-    await context.read(loginProvider).login(context, email, password);
+    try {
+      await context.read(loginProvider).login(
+            context,
+            email: email,
+            password: password,
+          );
+    } on ApiValidationError catch (err) {
+      errors = err.errors;
+      setState(() {});
+      return;
+    }
     await context.router.pushAndPopUntil(
       MainRoute(),
       predicate: (route) => false,
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    this.controller,
-    this.hintText,
-    this.autofillHints,
-    this.onChanged,
-  });
-
-  final TextEditingController? controller;
-  final String? hintText;
-  final Iterable<String>? autofillHints;
-  final void Function(String)? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      autofillHints: autofillHints,
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        hintText: hintText,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black12),
-        ),
-      ),
     );
   }
 }

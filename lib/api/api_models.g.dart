@@ -176,3 +176,40 @@ Map<String, dynamic> _$LoginUserToJson(LoginUser instance) => <String, dynamic>{
       'updatedAt': instance.updatedAt,
       'username': instance.username,
     };
+
+UsersPostRequest _$UsersPostRequestFromJson(Map<String, dynamic> json) {
+  return UsersPostRequest(
+    user: SignUpUser.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$UsersPostRequestToJson(UsersPostRequest instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
+
+UsersPostResponse _$UsersPostResponseFromJson(Map<String, dynamic> json) {
+  return UsersPostResponse(
+    user: LoginUser.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$UsersPostResponseToJson(UsersPostResponse instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
+
+SignUpUser _$SignUpUserFromJson(Map<String, dynamic> json) {
+  return SignUpUser(
+    email: json['email'] as String,
+    password: json['password'] as String,
+    username: json['username'] as String,
+  );
+}
+
+Map<String, dynamic> _$SignUpUserToJson(SignUpUser instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'password': instance.password,
+      'username': instance.username,
+    };
