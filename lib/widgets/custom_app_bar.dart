@@ -64,7 +64,7 @@ class CustomAppBar extends StatelessWidget {
                     path: registerPath,
                     text: 'New Articles',
                     route: RegisterRoute(),
-                    icon: Icons.article,
+                    icon: Icons.edit,
                   ),
                 if (isLoggedIn)
                   _NavigationButton(
@@ -122,7 +122,7 @@ class _NavigationButton extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (icon != null) Icon(icon, size: 18),
+            if (icon != null) Icon(icon, size: 16),
             Text(
               text,
               style: TextStyle(
