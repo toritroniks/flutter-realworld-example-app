@@ -11,6 +11,7 @@ import '../pages/article/article_page.dart' as _i6;
 import '../pages/login/login_page.dart' as _i4;
 import '../pages/main/main_page.dart' as _i3;
 import '../pages/register/register_page.dart' as _i5;
+import '../pages/settings/settings_page.dart' as _i7;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -48,6 +49,13 @@ class AppRouter extends _i1.RootStackRouter {
           return _i6.ArticlePage(id: args.id);
         },
         opaque: true,
+        barrierDismissible: false),
+    SettingsRoute.name: (routeData) => _i1.CustomPage<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i7.SettingsPage();
+        },
+        opaque: true,
         barrierDismissible: false)
   };
 
@@ -56,7 +64,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(MainRoute.name, path: '/'),
         _i1.RouteConfig(LoginRoute.name, path: '/login'),
         _i1.RouteConfig(RegisterRoute.name, path: '/rigister'),
-        _i1.RouteConfig(ArticleRoute.name, path: '/article/:id')
+        _i1.RouteConfig(ArticleRoute.name, path: '/article/:id'),
+        _i1.RouteConfig(SettingsRoute.name, path: '/settings')
       ];
 }
 
@@ -92,4 +101,10 @@ class ArticleRouteArgs {
   const ArticleRouteArgs({required this.id});
 
   final String id;
+}
+
+class SettingsRoute extends _i1.PageRouteInfo {
+  const SettingsRoute() : super(name, path: '/settings');
+
+  static const String name = 'SettingsRoute';
 }

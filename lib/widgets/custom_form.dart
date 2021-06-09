@@ -107,9 +107,12 @@ class CustomSubmitButton extends StatelessWidget {
             (states) =>
                 states.contains(MaterialState.hovered) ? Colors.black12 : null,
           ),
-          fixedSize: MaterialStateProperty.all(Size(100, 50)),
+          minimumSize: MaterialStateProperty.all(Size(100, 60)),
           textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18))),
-      child: Text(submitText),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text(submitText),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_realworld/pages/article/article_page.dart';
 import 'package:flutter_realworld/pages/login/login_page.dart';
 import 'package:flutter_realworld/pages/main/main_page.dart';
 import 'package:flutter_realworld/pages/register/register_page.dart';
+import 'package:flutter_realworld/pages/settings/settings_page.dart';
 
 // one time build：flutter pub run build_runner build
 // watch for changes and build real-time：flutter pub run build_runner watch
@@ -23,6 +24,7 @@ const editorPath = '/editor';
     CustomRoute(path: loginPath, page: LoginPage),
     CustomRoute(path: registerPath, page: RegisterPage),
     CustomRoute(path: articlePath, page: ArticlePage),
+    CustomRoute(path: settingsPath, page: SettingsPage),
   ],
 )
 class $AppRouter {}
