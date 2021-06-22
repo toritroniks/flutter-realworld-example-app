@@ -38,6 +38,33 @@ class Api {
     return resBody;
   }
 
+  static Future<dynamic> _put(
+    BuildContext context,
+    String path,
+    dynamic req,
+  ) async {
+    final reqBody = json.encode(req);
+    print('PUT：$path\n$reqBody');
+    final uri = Uri.https(config.apiEndpoint, '/api$path');
+    final headers = await _postHeaders(context);
+    final res = await http
+        .put(
+          uri,
+          headers: headers,
+          body: reqBody,
+        )
+        .timeout(Constants.apiTimeout);
+    final resBody = json.decode(res.body);
+    print('PUT FINISH: $resBody');
+    if (res.statusCode != 200) {
+      if (res.statusCode == 422) {
+        throw ApiValidationError(resBody);
+      }
+      throw Exception('API ERROR');
+    }
+    return resBody;
+  }
+
   static Future<dynamic> _get(
     BuildContext context,
     String path,
@@ -108,6 +135,14 @@ class Api {
   ) async {
     final res = await _get(context, '/user', req);
     return UserGetResponse.fromJson(res);
+  }
+
+  static Future<UserPutResponse> userPut(
+    BuildContext context,
+    UserPutRequest req,
+  ) async {
+    final res = await _put(context, '/user', req);
+    return UserPutResponse.fromJson(res);
   }
 
   static Future<UsersPostResponse> usersPost(

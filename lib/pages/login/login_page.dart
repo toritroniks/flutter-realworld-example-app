@@ -76,14 +76,14 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           CustomTextField(
                             hintText: 'Email',
-                            // autofillHints: [AutofillHints.email], // TODO: uncomment when autofill bug fix gets to flutter stable
+                            autofillHints: [AutofillHints.email],
                             onChanged: (val) {
                               email = val;
                             },
                           ),
                           CustomTextField(
                             hintText: 'Password',
-                            // autofillHints: [AutofillHints.password], // TODO: uncomment when autofill bug fix gets to flutter stable
+                            autofillHints: [AutofillHints.password],
                             onChanged: (val) {
                               password = val;
                             },

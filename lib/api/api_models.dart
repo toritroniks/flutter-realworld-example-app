@@ -219,3 +219,35 @@ class SignUpUser {
       _$SignUpUserFromJson(json);
   Map<String, dynamic> toJson() => _$SignUpUserToJson(this);
 }
+
+@JsonSerializable(explicitToJson: true)
+class UserPutRequest {
+  String username;
+  String? image;
+  String? bio;
+  String email;
+  String? password;
+
+  UserPutRequest({
+    required this.username,
+    required this.image,
+    required this.bio,
+    required this.email,
+    required this.password,
+  });
+  factory UserPutRequest.fromJson(Map<String, dynamic> json) =>
+      _$UserPutRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$UserPutRequestToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserPutResponse {
+  LoginUser user;
+
+  UserPutResponse({
+    required this.user,
+  });
+  factory UserPutResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserPutResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$UserPutResponseToJson(this);
+}

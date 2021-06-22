@@ -78,6 +78,27 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateUser(
+    BuildContext context, {
+    required String username,
+    required String? image,
+    required String? bio,
+    required String email,
+    required String? password,
+  }) async {
+    final res = await Api.userPut(
+        context,
+        UserPutRequest(
+          username: username,
+          image: image,
+          bio: bio,
+          email: email,
+          password: password,
+        ));
+    _user = res.user;
+    notifyListeners();
+  }
+
   bool get isLoading {
     return _isLoading;
   }

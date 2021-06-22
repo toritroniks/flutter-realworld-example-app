@@ -59,12 +59,18 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.hintText,
     this.autofillHints,
+    this.maxLines,
+    this.maxLength,
+    this.initialValue,
     this.onChanged,
   });
 
   final TextEditingController? controller;
   final String? hintText;
   final Iterable<String>? autofillHints;
+  final int? maxLines;
+  final int? maxLength;
+  final String? initialValue;
   final void Function(String)? onChanged;
 
   @override
@@ -73,6 +79,9 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       autofillHints: autofillHints,
       onChanged: onChanged,
+      maxLines: maxLines,
+      maxLength: maxLength,
+      initialValue: initialValue,
       decoration: InputDecoration(
         hintText: hintText,
         focusedBorder: OutlineInputBorder(
