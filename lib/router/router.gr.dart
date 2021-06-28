@@ -63,7 +63,7 @@ class AppRouter extends _i1.RootStackRouter {
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(MainRoute.name, path: '/'),
         _i1.RouteConfig(LoginRoute.name, path: '/login'),
-        _i1.RouteConfig(RegisterRoute.name, path: '/rigister'),
+        _i1.RouteConfig(RegisterRoute.name, path: '/register'),
         _i1.RouteConfig(ArticleRoute.name, path: '/article/:id'),
         _i1.RouteConfig(SettingsRoute.name, path: '/settings')
       ];
@@ -82,7 +82,7 @@ class LoginRoute extends _i1.PageRouteInfo {
 }
 
 class RegisterRoute extends _i1.PageRouteInfo {
-  const RegisterRoute() : super(name, path: '/rigister');
+  const RegisterRoute() : super(name, path: '/register');
 
   static const String name = 'RegisterRoute';
 }

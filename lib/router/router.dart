@@ -12,7 +12,7 @@ import 'package:flutter_realworld/pages/settings/settings_page.dart';
 const mainPath = '/';
 const profilePath = '/:id';
 const loginPath = '/login';
-const registerPath = '/rigister';
+const registerPath = '/register';
 const settingsPath = '/settings';
 const articlePath = '/article/:id';
 const editorPath = '/editor';

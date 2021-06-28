@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_realworld/api/api_models.dart';
-import 'package:flutter_realworld/api/mock.dart';
 import 'package:flutter_realworld/config/app_config.dart';
 import 'package:flutter_realworld/constants/constants.dart';
 import 'package:flutter_realworld/errors/api_validation_error.dart';
