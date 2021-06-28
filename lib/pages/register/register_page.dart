@@ -9,8 +9,6 @@ import 'package:flutter_realworld/widgets/custom_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage();
-
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -32,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Sign up',
                   style: TextStyle(
                     color: Color(0xFF373A3C),
@@ -49,24 +47,25 @@ class _RegisterPageState extends State<RegisterPage> {
                     overlayColor: MaterialStateProperty.all(Colors.transparent),
                     textStyle: MaterialStateProperty.resolveWith(
                       (states) => states.contains(MaterialState.hovered)
-                          ? TextStyle(decoration: TextDecoration.underline)
-                          : TextStyle(),
+                          ? const TextStyle(
+                              decoration: TextDecoration.underline)
+                          : const TextStyle(),
                     ),
                   ),
                   onPressed: () {
-                    context.router.push(LoginRoute());
+                    context.router.push(const LoginRoute());
                   },
-                  child: Text(
+                  child: const Text(
                     'Have an account?',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     final width = Responsive.isMobile(context)
                         ? constraints.maxWidth
                         : constraints.maxWidth * 0.4;
-                    return Container(
+                    return SizedBox(
                       width: width,
                       child: CustomForm(
                         errors: errors,
@@ -77,21 +76,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           CustomTextField(
                             hintText: 'Username',
-                            // autofillHints: [AutofillHints.username], // TODO: uncomment when autofill bug fix gets to flutter stable
                             onChanged: (val) {
                               username = val;
                             },
                           ),
                           CustomTextField(
                             hintText: 'Email',
-                            // autofillHints: [AutofillHints.email], // TODO: uncomment when autofill bug fix gets to flutter stable
                             onChanged: (val) {
                               email = val;
                             },
                           ),
                           CustomTextField(
                             hintText: 'Password',
-                            // autofillHints: [AutofillHints.password], // TODO: uncomment when autofill bug fix gets to flutter stable
                             onChanged: (val) {
                               password = val;
                             },
@@ -123,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
     await context.router.pushAndPopUntil(
-      MainRoute(),
+      const MainRoute(),
       predicate: (route) => false,
     );
   }

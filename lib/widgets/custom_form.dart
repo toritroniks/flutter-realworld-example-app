@@ -57,6 +57,7 @@ class CustomForm extends StatelessWidget {
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     this.controller,
+    this.obscureText = false,
     this.hintText,
     this.autofillHints,
     this.maxLines,
@@ -66,6 +67,7 @@ class CustomTextField extends StatelessWidget {
   });
 
   final TextEditingController? controller;
+  final bool obscureText;
   final String? hintText;
   final Iterable<String>? autofillHints;
   final int? maxLines;
@@ -77,6 +79,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      obscureText: obscureText,
       autofillHints: autofillHints,
       onChanged: onChanged,
       maxLines: maxLines,

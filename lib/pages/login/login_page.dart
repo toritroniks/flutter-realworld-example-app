@@ -9,8 +9,6 @@ import 'package:flutter_realworld/widgets/custom_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage();
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -31,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Sign in',
                   style: TextStyle(
                     color: Color(0xFF373A3C),
@@ -48,24 +46,25 @@ class _LoginPageState extends State<LoginPage> {
                     overlayColor: MaterialStateProperty.all(Colors.transparent),
                     textStyle: MaterialStateProperty.resolveWith(
                       (states) => states.contains(MaterialState.hovered)
-                          ? TextStyle(decoration: TextDecoration.underline)
-                          : TextStyle(),
+                          ? const TextStyle(
+                              decoration: TextDecoration.underline)
+                          : const TextStyle(),
                     ),
                   ),
                   onPressed: () {
-                    context.router.push(RegisterRoute());
+                    context.router.push(const RegisterRoute());
                   },
-                  child: Text(
+                  child: const Text(
                     'Need an account?',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     final width = Responsive.isMobile(context)
                         ? constraints.maxWidth
                         : constraints.maxWidth * 0.4;
-                    return Container(
+                    return SizedBox(
                       width: width,
                       child: CustomForm(
                         errors: errors,
@@ -76,14 +75,15 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           CustomTextField(
                             hintText: 'Email',
-                            autofillHints: [AutofillHints.email],
+                            autofillHints: const [AutofillHints.username],
                             onChanged: (val) {
                               email = val;
                             },
                           ),
                           CustomTextField(
                             hintText: 'Password',
-                            autofillHints: [AutofillHints.password],
+                            obscureText: true,
+                            autofillHints: const [AutofillHints.password],
                             onChanged: (val) {
                               password = val;
                             },
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
     await context.router.pushAndPopUntil(
-      MainRoute(),
+      const MainRoute(),
       predicate: (route) => false,
     );
   }
