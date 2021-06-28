@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_realworld/errors/api_validation_error.dart';
 import 'package:flutter_realworld/providers/login_provider.dart';
 import 'package:flutter_realworld/responsive.dart';
@@ -17,9 +18,23 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   List<String> errors = [];
-  String username = '';
-  String email = '';
-  String password = '';
+  final imageController = TextEditingController();
+  final usernameController = TextEditingController();
+  final bioController = TextEditingController();
+  final emailController = TextEditingController();
+  final newPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final user = context.read(loginProvider).user;
+      imageController.text = user.image ?? '';
+      usernameController.text = user.username;
+      bioController.text = user.bio ?? '';
+      emailController.text = user.email;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +54,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     fontSize: 38,
                   ),
                 ),
-                TextButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.resolveWith(
-                      (states) => states.contains(MaterialState.hovered)
-                          ? Colors.green.shade800
-                          : Theme.of(context).primaryColor,
-                    ),
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                    textStyle: MaterialStateProperty.resolveWith(
-                      (states) => states.contains(MaterialState.hovered)
-                          ? TextStyle(decoration: TextDecoration.underline)
-                          : TextStyle(),
-                    ),
-                  ),
-                  onPressed: () {
-                    context.router.push(LoginRoute());
-                  },
-                  child: Text(
-                    'Have an account?',
-                  ),
-                ),
-                SizedBox(height: 10),
                 LayoutBuilder(
                   builder: (context, constraints) {
                     final width = Responsive.isMobile(context)
                         ? constraints.maxWidth
-                        : constraints.maxWidth * 0.4;
+                        : constraints.maxWidth * 0.5;
                     return Container(
                       width: width,
                       child: Column(
@@ -73,28 +66,30 @@ class _SettingsPageState extends State<SettingsPage> {
                           CustomForm(
                             errors: errors,
                             submitText: 'Update Settings',
-                            onSubmit: () {},
+                            onSubmit: () {
+                              _updateSettings();
+                            },
                             children: [
                               CustomTextField(
+                                hintText: 'URL of profile picture',
+                                controller: imageController,
+                              ),
+                              CustomTextField(
                                 hintText: 'Username',
-                                // autofillHints: [AutofillHints.username], // TODO: uncomment when autofill bug fix gets to flutter stable
-                                onChanged: (val) {
-                                  username = val;
-                                },
+                                controller: usernameController,
+                              ),
+                              CustomTextField(
+                                hintText: 'Short bio about you',
+                                maxLines: 9,
+                                controller: bioController,
                               ),
                               CustomTextField(
                                 hintText: 'Email',
-                                // autofillHints: [AutofillHints.email], // TODO: uncomment when autofill bug fix gets to flutter stable
-                                onChanged: (val) {
-                                  email = val;
-                                },
+                                controller: emailController,
                               ),
                               CustomTextField(
-                                hintText: 'Password',
-                                // autofillHints: [AutofillHints.password], // TODO: uncomment when autofill bug fix gets to flutter stable
-                                onChanged: (val) {
-                                  password = val;
-                                },
+                                hintText: 'New Password',
+                                controller: newPasswordController,
                               ),
                             ],
                           ),
@@ -117,13 +112,17 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future<void> _signUp() async {
+  Future<void> _updateSettings() async {
     try {
-      await context.read(loginProvider).signUp(
+      await context.read(loginProvider).updateUser(
             context,
-            username: username,
-            email: email,
-            password: password,
+            username: usernameController.text,
+            image: imageController.text.isEmpty ? null : imageController.text,
+            bio: bioController.text.isEmpty ? null : bioController.text,
+            email: emailController.text,
+            password: newPasswordController.text.isEmpty
+                ? null
+                : newPasswordController.text,
           );
     } on ApiValidationError catch (err) {
       errors = err.errors;

@@ -213,3 +213,33 @@ Map<String, dynamic> _$SignUpUserToJson(SignUpUser instance) =>
       'password': instance.password,
       'username': instance.username,
     };
+
+UserPutRequest _$UserPutRequestFromJson(Map<String, dynamic> json) {
+  return UserPutRequest(
+    username: json['username'] as String,
+    image: json['image'] as String?,
+    bio: json['bio'] as String?,
+    email: json['email'] as String,
+    password: json['password'] as String?,
+  );
+}
+
+Map<String, dynamic> _$UserPutRequestToJson(UserPutRequest instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'image': instance.image,
+      'bio': instance.bio,
+      'email': instance.email,
+      'password': instance.password,
+    };
+
+UserPutResponse _$UserPutResponseFromJson(Map<String, dynamic> json) {
+  return UserPutResponse(
+    user: LoginUser.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$UserPutResponseToJson(UserPutResponse instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };
