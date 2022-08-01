@@ -57,7 +57,9 @@ class CustomAppBar {
             overlayColor: MaterialStateProperty.resolveWith(
                 (states) => Colors.transparent),
           ),
-          onPressed: () {},
+          onPressed: () {
+            context.router.push(LoginRoute());
+          },
           child: Text(
             'Sign in',
             style: TextStyle(
